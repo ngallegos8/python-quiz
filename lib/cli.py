@@ -197,9 +197,9 @@ if __name__ == '__main__':
         # print(players)
         answer = inquirer.prompt(returning_player_options)
         answer_key = answer["choose"]
-        print(answer_key)
+        # print(answer_key)
         player = answer_key.id
-        print(type(player))
+        # print(type(player))
         selected_player = player
         logged_in_menu(selected_player)
 
@@ -283,11 +283,20 @@ if __name__ == '__main__':
             session.commit()
             easy_quiz(selected_player, new_easy_quiz)
         elif answer_key == "Medium":
-            medium_quiz(selected_player)
+            new_medium_quiz = Quiz(name="Medium", player_id=selected_player)
+            session.add(new_medium_quiz)
+            session.commit()
+            medium_quiz(selected_player, new_medium_quiz)
         elif answer_key == "Hard":
-            hard_quiz(selected_player)
+            new_hard_quiz = Quiz(name="Hard", player_id=selected_player)
+            session.add(new_hard_quiz)
+            session.commit()
+            hard_quiz(selected_player, new_hard_quiz)
         elif answer_key == "Marilyn Vos Savant":
-            marilyn_vos_savant_quiz(selected_player)
+            new_marilyn_vos_savant_quiz = Quiz(name="Marilyn Vos Savant", player_id=selected_player)
+            session.add(new_marilyn_vos_savant_quiz)
+            session.commit()
+            marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz)
         elif answer_key == "Quit":
             print("Chicken!")
             exit
@@ -375,20 +384,30 @@ if __name__ == '__main__':
 
 
     def easy_quiz(selected_player, new_easy_quiz):
-        
-        print(new_easy_quiz)
-        print(selected_player)
-        # run_easy_quiz()
+        # print(new_easy_quiz)
+        # print(selected_player)
         score = run_easy_quiz()
         result = Result(player_id=selected_player, quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
         session.commit()
-    def medium_quiz():
-        run_medium_quiz()
-    def hard_quiz():
-        run_hard_quiz()
-    def marilyn_vos_savant_quiz():
-        run_marilyn_vos_savant_quiz()
+
+    def medium_quiz(selected_player, new_medium_quiz):
+        score = run_medium_quiz()
+        result = Result(player_id=selected_player, quiz_id=new_medium_quiz.id, score=score)
+        session.add(result)
+        session.commit()
+
+    def hard_quiz(selected_player, new_hard_quiz):
+        score = run_hard_quiz()
+        result = Result(player_id=selected_player, quiz_id=new_hard_quiz.id, score=score)
+        session.add(result)
+        session.commit()
+
+    def marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz):
+        score = run_marilyn_vos_savant_quiz()
+        result = Result(player_id=selected_player, quiz_id=new_marilyn_vos_savant_quiz.id, score=score)
+        session.add(result)
+        session.commit()
 
     starter_menu()
 

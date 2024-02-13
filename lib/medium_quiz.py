@@ -1,3 +1,6 @@
+from string import ascii_lowercase
+import string
+
 QUESTIONS = {
     "What is the defining characteristic of someone who is described as hirsute?": [
         "Hairy", "Rude", "Funny", "Tall"
@@ -35,15 +38,24 @@ QUESTIONS = {
     ]
 }
 def run_medium_quiz():
-    for question, alternatives in QUESTIONS.items():
+
+    num_correct = 0
+    for num, (question, alternatives) in enumerate(QUESTIONS.items(), start=1):
+        print(f"\nQuestion {num}:")
+        print(f"{question}?")
         correct_answer = alternatives[0]
-        sorted_alternatives = sorted(alternatives)
-        for label, alternative in enumerate(sorted_alternatives):
+        labeled_alternatives = dict(zip(ascii_lowercase, sorted(alternatives)))
+        for label, alternative in labeled_alternatives.items():
             print(f"  {label}) {alternative}")
 
-        answer_label = int(input(f"{question}? "))
-        answer = sorted_alternatives[answer_label]
+        answer_label = input("\nChoice? ")
+        answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
-            print("Correct!")
+            num_correct += 1
+            print("⭐ Correct! ⭐")
         else:
             print(f"The answer is {correct_answer!r}, not {answer!r}")
+        
+
+    print(f"\nYou got {num_correct} correct out of {num} questions")
+    return num_correct
