@@ -2,5 +2,15 @@
     -When input is out of range of quiz answers, quits quiz. Need to provide error and persist on current question
 
 
+Function for times_played
 
-When selecting exsisting player, no list of exsisting shows up
+function for avg_score
+
+function for high_score needs to show player name, not their id
+    -bonus: high score for each test
+
+
+
+Edit player
+
+Delete player

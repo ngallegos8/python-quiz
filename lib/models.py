@@ -36,6 +36,7 @@ class Quiz(Base):
     # correct_answer = Column(String, nullable=False)
     # alt_answers = Column(String, nullable=True)
     player_id = Column(Integer, ForeignKey("players.id"))
+    
 
     players = relationship("Player", secondary="results", back_populates="quizzes") #DO I NEED secondary="results", for point to the association table?
     # results = relationship("Result", secondary="quizzes", back_populates="quizzes")
