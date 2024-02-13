@@ -165,6 +165,27 @@ if __name__ == '__main__':
             returning_player()
 
 
+    # def returning_player():
+    #     players = session.query(Player).all()
+    #     returning_player_options = [
+    #         inquirer.List("choose",
+    #                       message = "Select Yourself",
+    #                       choices =[player for player in players])
+    #     ]
+    #     # print(players)
+    #     answer = inquirer.prompt(returning_player_options)
+    #     answer_key = answer["choose"]
+    #     player_choice = answer_key.id
+
+    #     def player_obj():
+    #         if player_choice == Player.name in players:
+    #             return Player.id
+            
+
+    #     selected_player = player_obj
+    #     logged_in_menu(selected_player)
+
+
 
     def returning_player():
         players = session.query(Player).all()
@@ -173,9 +194,12 @@ if __name__ == '__main__':
                           message = "Select Yourself",
                           choices =[player for player in players])
         ]
+        # print(players)
         answer = inquirer.prompt(returning_player_options)
         answer_key = answer["choose"]
+        print(answer_key)
         player = answer_key.id
+        print(type(player))
         selected_player = player
         logged_in_menu(selected_player)
 
@@ -235,30 +259,87 @@ if __name__ == '__main__':
 
     # def select_quiz_topic():
     #     pass
-        
+            
 
     def select_quiz(selected_player):
-        start_menu = [
-        inquirer.List("options",
+        # quizzes = session.query(Quiz).all()
+
+        select_quiz_options = [
+        inquirer.List("choose",
                         message = "Select Difficulty",
-                        choices = ["Easy", "Medium", "Hard", "Marilyn Vos Savant", "Quit"],
+                        choices = ["Easy", "Medium", "Hard", "Marilyn Vos Savant", "Quit"]
                         ),
         ]
 
-        start_menu_responses = inquirer.prompt(start_menu)
-        start_menu_responses_key = start_menu_responses["options"]
+        answer = inquirer.prompt(select_quiz_options)
+        answer_key = answer["choose"]
+        print(answer)
+        # quiz = answer_key.id
+        # selected_quiz = quiz
 
-        if start_menu_responses_key == "Easy":
-            easy_quiz(selected_player)
-        elif start_menu_responses_key == "Medium":
+        if answer_key == "Easy":
+            new_easy_quiz = Quiz(name="Easy", player_id=selected_player)
+            session.add(new_easy_quiz)
+            session.commit()
+            easy_quiz(selected_player, new_easy_quiz)
+        elif answer_key == "Medium":
             medium_quiz(selected_player)
-        elif start_menu_responses_key == "Hard":
+        elif answer_key == "Hard":
             hard_quiz(selected_player)
-        elif start_menu_responses_key == "Marilyn Vos Savant":
+        elif answer_key == "Marilyn Vos Savant":
             marilyn_vos_savant_quiz(selected_player)
-        elif start_menu_responses_key == "Quit":
+        elif answer_key == "Quit":
             print("Chicken!")
             exit
+
+
+
+        
+
+    # def select_quiz(selected_player):
+    #     select_quiz_options = [
+    #     inquirer.List("choose",
+    #                     message = "Select Difficulty",
+    #                     choices = ["Easy", "Medium", "Hard", "Marilyn Vos Savant", "Quit"]
+    #                     ),
+    #     ]
+
+    #     answer = inquirer.prompt(select_quiz_options)
+    #     answer_key = answer["choose"]
+    #     quiz = answer_key.id
+    #     selected_quiz = quiz
+
+    #     if answer_key == "Easy":
+    #         new_easy_quiz = Quiz(name="Easy", player_id=selected_player)
+    #         session.add(new_easy_quiz)
+    #         session.commit()
+    #         easy_quiz(selected_player, new_easy_quiz)
+    #     elif answer_key == "Medium":
+    #         medium_quiz(selected_player)
+    #     elif answer_key == "Hard":
+    #         hard_quiz(selected_player)
+    #     elif answer_key == "Marilyn Vos Savant":
+    #         marilyn_vos_savant_quiz(selected_player)
+    #     elif answer_key == "Quit":
+    #         print("Chicken!")
+    #         exit
+
+
+
+    # def returning_player():
+    #     players = session.query(Player).all()
+    #     returning_player_options = [
+    #         inquirer.List("choose",
+    #                       message = "Select Yourself",
+    #                       choices =[player for player in players])
+    #     ]
+    #     answer = inquirer.prompt(returning_player_options)
+    #     answer_key = answer["choose"]
+    #     player = answer_key.id
+    #     selected_player = player
+    #     logged_in_menu(selected_player)
+
+
 
     def edit_player(selected_player):
         player_id = selected_player.id
@@ -293,10 +374,13 @@ if __name__ == '__main__':
         
 
 
-    def easy_quiz(selected_player):
-        run_easy_quiz()
+    def easy_quiz(selected_player, new_easy_quiz):
+        
+        print(new_easy_quiz)
+        print(selected_player)
+        # run_easy_quiz()
         score = run_easy_quiz()
-        result = Result(player_id=selected_player.id, quiz_id=easy_quiz.id, score=score)
+        result = Result(player_id=selected_player, quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
         session.commit()
     def medium_quiz():

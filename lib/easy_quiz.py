@@ -103,5 +103,7 @@ def run_easy_quiz():
 
     print(f"\nYou got {num_correct} correct out of {num} questions")
     return num_correct
+# print(run_easy_quiz())
+
 
     
