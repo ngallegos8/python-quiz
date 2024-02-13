@@ -19,10 +19,17 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    while True:
+    # Fetch the existing questions from the database
+    questions = session.query(Quiz).all()
+    question_texts = set(question.question_text for question in questions)
 
+    results = session.query(Result).all()
+    results_after = 
 
-        pass
+    session.commit()
+
+    # Close the session when you're done
+    session.close()
 
     
 

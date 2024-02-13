@@ -1,0 +1,6 @@
+"Index out of range" - Error
+    -When input is out of range of quiz answers, quits quiz. Need to provide error and persist on current question
+
+
+
+When selecting exsisting player, no list of exsisting shows up
