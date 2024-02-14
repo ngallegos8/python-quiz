@@ -79,13 +79,13 @@ if __name__ == '__main__':
             returning_player()
 
 
-
     def returning_player():
         players = session.query(Player).all()
         returning_player_options = [
             inquirer.List("choose",
                           message = "Select Yourself",
-                          choices =[player for player in players])
+                          choices =[player for player in players],
+                          ),
         ]
         # print(players)
         answer = inquirer.prompt(returning_player_options)
@@ -184,7 +184,8 @@ if __name__ == '__main__':
         # print(new_easy_quiz)
         # print(selected_player)
         score = run_easy_quiz()
-        result = Result(player_id=selected_player, quiz_id=new_easy_quiz.id, score=score)
+        result = Result(player_id=selected_player
+        , quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
         session.commit()
 
@@ -207,36 +208,37 @@ if __name__ == '__main__':
         session.commit()
 
 
+
     def edit_player(selected_player):
-        print(selected_player)
-        player_id = selected_player.id
+        # print(selected_player)
+        player_id = selected_player
         player = session.query(Player).filter_by(id = player_id).first()
         name = input("Enter a new name or press enter to keep current name: ")
         if name:
                 player.name = name
         session.commit()
-        select_quiz()
+        logged_in_menu(selected_player)
 
     def delete_player(selected_player):
-        player_id = selected_player.id
+        player_id = selected_player
         player = session.query(Player).filter_by(id = player_id).first()
         start_menu = [
         inquirer.List("options",
                         message = "Are you sure you want to delete yourself?",
-                        choices = ["Yes", "No, go back!"],
+                        choices = ["No, go back!", "Yes"],
                         ),
         ]
 
         start_menu_responses = inquirer.prompt(start_menu)
         start_menu_responses_key = start_menu_responses["options"]
 
-        if start_menu_responses_key == "Yes":
+        if start_menu_responses_key == "No, go back!":
+            logged_in_menu(selected_player)
+        elif start_menu_responses_key == "Yes":
             session.delete(player)
             session.commit()
             print("You're outta here!")
             starter_menu()
-        elif start_menu_responses_key == "No, go back!":
-            logged_in_menu()
             
 
 
