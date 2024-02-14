@@ -1,5 +1,4 @@
 from string import ascii_lowercase
-import string
 
 # OLD VERSION - Input has to be integer of index (i.e. 1, 2, 0)...wouldn't make sense to someone who doesn't understand indexes (0 = 1st choice)
 # QUESTIONS = {

@@ -1,8 +1,8 @@
-import random
 import inquirer
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Player, Quiz, Result
+
 from easy_quiz import *
 from medium_quiz import *
 from hard_quiz import *

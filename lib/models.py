@@ -1,6 +1,6 @@
-import inquirer
-from sqlalchemy import create_engine, ForeignKey, Column, Integer, String
-from sqlalchemy.orm import sessionmaker, relationship, validates, declarative_base
+
+from sqlalchemy import ForeignKey, Column, Integer, String
+from sqlalchemy.orm import relationship, validates, declarative_base
 
 Base = declarative_base()
 

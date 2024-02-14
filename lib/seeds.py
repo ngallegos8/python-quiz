@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import Player, Quiz, Result, Base
+from models import Base
 
 # in this function, there is CRUD happening to the quizzes table 
 if __name__ == '__main__':
