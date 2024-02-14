@@ -1,5 +1,4 @@
 from string import ascii_lowercase
-import string
 
 QUESTIONS = {
     "The word 'aprosexia' means which of the following?": [

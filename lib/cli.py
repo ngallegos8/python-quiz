@@ -60,6 +60,8 @@ if __name__ == '__main__':
             else:
                 returning_player()
 
+
+
     #Function that allows the player to input their information a after they click "new" from the previous function
     def create_new_player():
         player_name = session.query(Player.name).all()
@@ -79,6 +81,7 @@ if __name__ == '__main__':
             returning_player()
 
 
+
     def returning_player():
         players = session.query(Player).all()
         returning_player_options = [
@@ -96,7 +99,7 @@ if __name__ == '__main__':
         selected_player = player
         logged_in_menu(selected_player)
 
-        
+
 
     def return_to_start ():
         return_start = [
@@ -111,6 +114,7 @@ if __name__ == '__main__':
         elif return_start_answers["return"] == "No":
             print("You'll never make the high scores like that!")
             exit
+
         
 
     def logged_in_menu(selected_player):    #needs to take in player thats selected?
@@ -180,6 +184,7 @@ if __name__ == '__main__':
             exit
 
 
+
     def easy_quiz(selected_player, new_easy_quiz):
         # print(new_easy_quiz)
         # print(selected_player)
@@ -204,7 +209,6 @@ if __name__ == '__main__':
         session.commit()
         post_quiz(selected_player)
 
-
     def marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz):
         score = run_marilyn_vos_savant_quiz()
         result = Result(player_id=selected_player, quiz_id=new_marilyn_vos_savant_quiz.id, score=score)
@@ -212,6 +216,7 @@ if __name__ == '__main__':
         session.commit()
         post_quiz(selected_player)
         
+
 
     def post_quiz (selected_player):
             post_quiz_options = [
@@ -241,6 +246,8 @@ if __name__ == '__main__':
         session.commit()
         logged_in_menu(selected_player)
 
+
+
     def delete_player(selected_player):
         player_id = selected_player
         player = session.query(Player).filter_by(id = player_id).first()
@@ -250,10 +257,8 @@ if __name__ == '__main__':
                         choices = ["No, go back!", "Yes"],
                         ),
         ]
-
         start_menu_responses = inquirer.prompt(start_menu)
         start_menu_responses_key = start_menu_responses["options"]
-
         if start_menu_responses_key == "No, go back!":
             logged_in_menu(selected_player)
         elif start_menu_responses_key == "Yes":
@@ -262,7 +267,6 @@ if __name__ == '__main__':
             print("You're outta here!")
             starter_menu()
             
-
 
 
     def high_scores():

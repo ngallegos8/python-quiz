@@ -1,5 +1,4 @@
 from string import ascii_lowercase
-import string
 
 QUESTIONS = {
     "What is the defining characteristic of someone who is described as hirsute?": [

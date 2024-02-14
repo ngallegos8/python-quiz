@@ -97,7 +97,7 @@ def run_easy_quiz():
             num_correct += 1
             print("⭐ Correct! ⭐")
         else:
-            print(f"The answer is {correct_answer!r}, not {answer!r}")
+            print(f"Ha! Nope! The answer is {correct_answer!r}, not {answer!r}")
         
 
     print(f"\nYou got {num_correct} correct out of {num} questions\n")

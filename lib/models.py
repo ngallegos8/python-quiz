@@ -28,6 +28,7 @@ class Player(Base):
         return f"{self.name}"
     
 
+
 class Quiz(Base):
     __tablename__ = 'quizzes'
     id = Column(Integer, primary_key=True)
@@ -39,7 +40,7 @@ class Quiz(Base):
     
 
     players = relationship("Player", secondary="results", back_populates="quizzes") #DO I NEED secondary="results", for point to the association table?
-    # results = relationship("Result", secondary="quizzes", back_populates="quizzes")
+
 
 
 class Result(Base):
