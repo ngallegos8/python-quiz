@@ -53,23 +53,5 @@ Stephen Lambert & David Doan: Flatiron instrcutors helped with troubleshooting e
 
 
 
-
-
-
-
-
-Make sure you have python and pipenv installed on your system
-Navigate to the specialty-coffee-manager directory in the terminal
-Run the command pipenv install and then open a shell enrivonment using pipenv shell
-With the shell environment open, enter the command 'python3 lib/app.py'
-
-
-
-
-
-
-
-
-
 Flatiron Phase 3 CLI Project
 
