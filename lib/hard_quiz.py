@@ -54,5 +54,5 @@ def run_hard_quiz():
             print(f"The answer is {correct_answer!r}, not {answer!r}")
         
 
-    print(f"\nYou got {num_correct} correct out of {num} questions")
+    print(f"\nYou got {num_correct} correct out of {num} questions\n")
     return num_correct

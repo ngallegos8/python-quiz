@@ -188,24 +188,46 @@ if __name__ == '__main__':
         , quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
         session.commit()
+        post_quiz(selected_player)
 
     def medium_quiz(selected_player, new_medium_quiz):
         score = run_medium_quiz()
         result = Result(player_id=selected_player, quiz_id=new_medium_quiz.id, score=score)
         session.add(result)
         session.commit()
+        post_quiz(selected_player)
 
     def hard_quiz(selected_player, new_hard_quiz):
         score = run_hard_quiz()
         result = Result(player_id=selected_player, quiz_id=new_hard_quiz.id, score=score)
         session.add(result)
         session.commit()
+        post_quiz(selected_player)
+
 
     def marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz):
         score = run_marilyn_vos_savant_quiz()
         result = Result(player_id=selected_player, quiz_id=new_marilyn_vos_savant_quiz.id, score=score)
         session.add(result)
         session.commit()
+        post_quiz(selected_player)
+        
+
+    def post_quiz (selected_player):
+            post_quiz_options = [
+                inquirer.List("return",
+                            message = "Now what?",
+                            choices = ["Take another quiz", "My Profile", "Quit"],
+                            ),
+            ]
+            return_start_answers = inquirer.prompt(post_quiz_options)
+            if return_start_answers["return"] == "Take another quiz":
+                select_quiz(selected_player)
+            if return_start_answers["return"] == "My Profile":
+                logged_in_menu(selected_player)
+            elif return_start_answers["return"] == "Quit":
+                print("See you next time!")
+                exit
 
 
 

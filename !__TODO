@@ -6,11 +6,8 @@ Function for times_played
 
 function for avg_score
 
+function for view user profile (inside logged_in_menu)
+
 function for high_score needs to show player name, not their id
     -bonus: high score for each test
 
-
-
-Edit player
-
-Delete player
