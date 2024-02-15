@@ -319,55 +319,38 @@ if __name__ == '__main__':
             return_to_start()
 
 
-
-
-
-
-
-    # def results(selected_player):
-    #     return [result for result in Result.all if result.player_id == selected_player.id]
-    
-    # # def games_played(selected_player):
-    # #     return set([result for result in Result.all if result.quiz_id == selected_player])
-
-    # def times_played(selected_player, results):
-    #     num_times_played =  len(results)
-    #     num_times_played = selected_player.times_played
-
-    # def add_times_played(selected_player):
-    #     if selected_player.id == Player.id:
-    #         Player.times_played = times_played
-
-    
-
     def increment_times_played(selected_player):
         session.query(Player).all()
         if selected_player.id == Player.id:
             selected_player = Player
-        print(selected_player.times_played)
+        # print(selected_player.times_played)
 
         if selected_player.times_played is None:
             selected_player.times_played = 1
         else:
             selected_player.times_played += 1
         session.commit()
+        calculate_avg_score(selected_player)
+
+
+
+    def calculate_avg_score(selected_player):
+        # Query all results for this player
+        results = session.query(Result).filter_by(player_id=selected_player.id).all()
+
+        if results:
+            total_score = sum(result.score for result in results)
+            selected_player.avg_score = int(total_score / len(results))
+        else:
+            selected_player.avg_score = 0  # or any default value you prefer
+
+        # Update the player's avg_score attribute
+        session.commit()
+
+
+
         
 
-
-
-    # def results(self):
-    #     return [result for result in Result.all if result.player == self]
-
-    # def games_played(self):
-    #     # return set([result for result in Result.all if result.game == self])
-    #     return list({result.game for result in self.results()})
-
-    # def played_game(self, game):
-    #     return game in self.games_played()
-
-    # def num_times_played(self, game):
-    #     games_played = [result.game for result in self.results()]
-    #     return games_played.count(game)
 
 
 
