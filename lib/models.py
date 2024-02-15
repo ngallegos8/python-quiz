@@ -24,8 +24,8 @@ class Player(Base):
                     return name
             
     #create a repr
-    def __repr__(self):
-        return f"{self.name}"
+    # def __repr__(self):
+    #     return f"{self.name}"
     
 
 

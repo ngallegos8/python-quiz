@@ -82,10 +82,11 @@ def run_easy_quiz():
     #     else:
     #         print(f"The answer is {correct_answer!r}, not {answer!r}")
 
+
     num_correct = 0
     for num, (question, alternatives) in enumerate(QUESTIONS.items(), start=1):
-        print(f"\nQuestion {num}:")
-        print(f"{question}?")
+        print(f"\n\u001b[4m\u001b[37;1mQuestion {num}:\u001b[0m")
+        print(f"\n{question}")
         correct_answer = alternatives[0]
         labeled_alternatives = dict(zip(ascii_lowercase, sorted(alternatives)))
         for label, alternative in labeled_alternatives.items():
@@ -95,12 +96,23 @@ def run_easy_quiz():
         answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
             num_correct += 1
-            print("⭐ Correct! ⭐")
+            print("\u001B[3m\n\u001b[32mCorrect!\u001B[3m\u001b[0m ✅\n")
         else:
-            print(f"Ha! Nope! The answer is {correct_answer!r}, not {answer!r}")
-        
+            print(f"\n \u001B[3m\u001b[1mHA!\u001B[3m\u001b[0m \u001B[3m\x1b[37;1;4mNOPE!\u001B[3m\x1b[37;1;0m \u001B[3mThe answer is\u001B[3m\u001B[0m \u001b[32m{correct_answer!r}\u001b[0m, \u001B[3m\u001B[3mnot\u001B[3m\u001B[0m \u001b[31m{answer!r}\u001b[0m\n")
 
-    print(f"\nYou got {num_correct} correct out of {num} questions\n")
+    general_print = print(f"\nYou got {num_correct} correct out of {num} questions\n")   
+    if num_correct <= 3:
+        general_print
+        print("\u001B[3mIt's Okay! You said you weren't very smart anyways!\u001B[0m")
+    elif 3 < num_correct <= 7:
+        general_print
+        print("\u001B[3mJust what I expected from someone like you\u001B[0m")
+    elif 7 < num_correct <= 9:
+        general_print
+        print("\u001B[3mNot bad for a dummy!\u001B[0m")
+    elif num_correct == 10:
+        general_print
+        print("\u001B[3mMaybe you're average! Take that quiz and let's see!\u001B[0m")
     return num_correct
 # print(run_easy_quiz())
 

@@ -7,7 +7,7 @@ QUESTIONS = {
     "Which film star has his statue in Leicester Square?": [
         "Charlie Chaplin", "Paul Newman", "Rowan Atkinson ", "Alfred Hitchcock"
     ],
-    "Which of the following  British Monarchs never appeared on a circulated pound sterling coin?": [
+    "Which of the following British Monarchs never appeared on a circulated pound sterling coin?": [
         "Edward VIII", "Victoria", "George VI", "Charles II"
     ],
     "Which musician has collaborated with American producer Porter Robinson and released the 2016 song 'Shelter'?": [
@@ -37,8 +37,8 @@ def run_hard_quiz():
 
     num_correct = 0
     for num, (question, alternatives) in enumerate(QUESTIONS.items(), start=1):
-        print(f"\nQuestion {num}:")
-        print(f"{question}?")
+        print(f"\n\u001b[4m\u001b[37;1mQuestion {num}:\u001b[0m")
+        print(f"\n{question}?")
         correct_answer = alternatives[0]
         labeled_alternatives = dict(zip(ascii_lowercase, sorted(alternatives)))
         for label, alternative in labeled_alternatives.items():
@@ -48,10 +48,22 @@ def run_hard_quiz():
         answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
             num_correct += 1
-            print("⭐ Correct! ⭐")
+            print("\u001B[3m\n\u001b[32mCorrect!\u001B[3m\u001b[0m ✅\n")
         else:
-            print(f"The answer is {correct_answer!r}, not {answer!r}")
+            print(f"\n \u001B[3m\u001b[1mHA!\u001B[3m\u001b[0m \u001B[3m\x1b[37;1;4mNOPE!\u001B[3m\x1b[37;1;0m \u001B[3mThe answer is\u001B[3m\u001B[0m \u001b[32m{correct_answer!r}\u001b[0m, \u001B[3m\u001B[3mnot\u001B[3m\u001B[0m \u001b[31m{answer!r}\u001b[0m\n")
         
 
-    print(f"\nYou got {num_correct} correct out of {num} questions\n")
+    general_print = print(f"\nYou got {num_correct} correct out of {num} questions\n")   
+    if num_correct <= 3:
+        general_print
+        print("\u001B[3mOugh! Maybe you're actually 'I'm Average' smart...that quiz might be better for you...\u001B[0m")
+    elif 3 < num_correct <= 7:
+        general_print
+        print("\u001B[3mI'm kinda impressed.\u001B[0m")
+    elif 7 < num_correct <= 9:
+        general_print
+        print("\u001B[3mNice! Smarter than my pet hamster!\u001B[0m")
+    elif num_correct == 10:
+        general_print
+        print("\u001B[3mMaybe you're 'Marilyn Vos Savant'! Take that quiz and let's see!\u001B[0m")
     return num_correct
