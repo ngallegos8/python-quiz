@@ -330,11 +330,12 @@ if __name__ == '__main__':
         else:
             selected_player.times_played += 1
         session.commit()
-        calculate_avg_score(selected_player)
+        player_avg_score(selected_player)
+        player_high_score(selected_player)
 
 
 
-    def calculate_avg_score(selected_player):
+    def player_avg_score(selected_player):
         # Query all results for this player
         results = session.query(Result).filter_by(player_id=selected_player.id).all()
 
@@ -345,6 +346,19 @@ if __name__ == '__main__':
             selected_player.avg_score = 0  # or any default value you prefer
 
         # Update the player's avg_score attribute
+        session.commit()
+
+
+    def player_high_score(selected_player):
+        # Query all results for this player
+        results = session.query(Result).filter_by(player_id=selected_player.id).all()
+
+        if results:
+            selected_player.high_score = max(result.score for result in results)
+        else:
+            selected_player.high_score = 0  # or any default value you prefer
+
+        # Update the player's high_score attribute
         session.commit()
 
 
