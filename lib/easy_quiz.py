@@ -96,13 +96,23 @@ def run_easy_quiz():
         answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
             num_correct += 1
-            print("\n\u001b[32mCorrect!\u001b[0m ✅")
+            print("\u001B[3m\n\u001b[32mCorrect!\u001B[3m\u001b[0m ✅\n")
         else:
-            print(f"\n\u001b[1mHa! Nope!\u001b[0m The answer is \u001b[32m{correct_answer!r}\u001b[0m, not \u001b[31m{answer!r}\u001b[0m")
-        
+            print(f"\n \u001B[3m\u001b[1mHA!\u001B[3m\u001b[0m \u001B[3m\x1b[37;1;4mNOPE!\u001B[3m\x1b[37;1;0m \u001B[3mThe answer is\u001B[3m\u001B[0m \u001b[32m{correct_answer!r}\u001b[0m, \u001B[3m\u001B[3mnot\u001B[3m\u001B[0m \u001b[31m{answer!r}\u001b[0m\n")
 
-    print(f"\nYou got {num_correct} correct out of {num} questions\n")
-    # print("\u001b[31mHello, world!\u001b[0m")
+    general_print = print(f"\nYou got {num_correct} correct out of {num} questions\n")   
+    if num_correct <= 3:
+        general_print
+        print("\u001B[3mIt's Okay! You said you weren't very smart anyways!\u001B[0m")
+    elif 3 < num_correct <= 7:
+        general_print
+        print("\u001B[3mJust what I expected from someone like you\u001B[0m")
+    elif 7 < num_correct <= 9:
+        general_print
+        print("\u001B[3mNot bad for a dummy!\u001B[0m")
+    elif num_correct == 10:
+        general_print
+        print("\u001B[3mMaybe you're average! Take that quiz and let's see!\u001B[0m")
     return num_correct
 # print(run_easy_quiz())
 
