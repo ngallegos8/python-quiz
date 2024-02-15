@@ -1,13 +1,14 @@
-"Index out of range" - Error
-    -When input is out of range of quiz answers, quits quiz. Need to provide error and persist on current question
+STRECH GOALS:
+
+1. Implement Quiz topics
+    - Choose Topic before difficulty
 
 
-Function for times_played
+2. IF quiz topics:
+    -Find ways to consolidate quizzes by topic and create loops for results and num_correct so there's not more than 4 of the same code for more than 4 quizzes
 
-function for avg_score
 
-function for view user profile (inside logged_in_menu)
+3. Player stats by quiz name/topic
 
-function for high_score needs to show player name, not their id
-    -bonus: high score for each test
+
 

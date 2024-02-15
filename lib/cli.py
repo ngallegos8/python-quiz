@@ -80,7 +80,6 @@ if __name__ == '__main__':
             starter_menu()
 
 
-    #Function that allows the player to input their information a after they click "new" from the previous function
     def create_new_player():
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
         player_name = session.query(Player.name).all()
@@ -122,32 +121,8 @@ if __name__ == '__main__':
         logged_in_menu(selected_player)
         return selected_player
 
-    # def returning_player(session):
-    #     players = session.query(Player).all()
-    #     returning_player_options = [
-    #         inquirer.List(
-    #             "choose",
-    #             message="Select Yourself",
-    #             choices=[(player.id, player.name) for player in players],  # Display player names in the list
-    #             carousel=True,  # Allow scrolling through the list
-    #         ),
-    #     ]
-    #     answer = inquirer.prompt(returning_player_options)
-    #     player_id = answer["choose"]
-        
-    #     # Find the selected player object based on the selected player ID
-    #     selected_player = session.query(Player).filter(Player.id == player_id).first()
 
-    #     # print(selected_player)
-    #     return selected_player
     
-
-    # # # Example usage:
-    # # # Assuming you have created a session named session
-    # selected_player = returning_player(session)
-    # print(selected_player)  # This should print the selected player object with all its attributes
-
-
 
     def return_to_start ():
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
@@ -196,6 +171,7 @@ if __name__ == '__main__':
             print("\x1b[35;3mQuitter!\x1b[35;0m")
             exit
 
+    # STRETCH GOAL #1
     # def select_quiz_topic():
     #     pass
             
@@ -402,9 +378,7 @@ if __name__ == '__main__':
             total_score = sum(result.score for result in results)
             selected_player.avg_score = int(total_score / len(results))
         else:
-            selected_player.avg_score = 0  # or any default value you prefer
-
-        # Update the player's avg_score attribute
+            selected_player.avg_score = 0
         session.commit()
 
 
@@ -415,9 +389,7 @@ if __name__ == '__main__':
         if results:
             selected_player.high_score = max(result.score for result in results)
         else:
-            selected_player.high_score = 0  # or any default value you prefer
-
-        # Update the player's high_score attribute
+            selected_player.high_score = 0
         session.commit()
 
 
