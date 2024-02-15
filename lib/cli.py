@@ -153,7 +153,7 @@ if __name__ == '__main__':
         start_menu = [
         inquirer.List("options",
                         message = "Select one",
-                        choices = ["Take Quiz", "Edit Player", "Remove Player", "Quit"],
+                        choices = ["Take Quiz", "View Stats", "Edit Player", "Remove Player", "Quit"],
                         ),
         ]
 
@@ -162,6 +162,8 @@ if __name__ == '__main__':
 
         if start_menu_responses_key == "Take Quiz":
             select_quiz(selected_player)
+        elif start_menu_responses_key == "View Stats":
+            view_player_stats(selected_player)
         elif start_menu_responses_key == "Edit Player":
             edit_player(selected_player)
         elif start_menu_responses_key == "Remove Player":
@@ -317,6 +319,15 @@ if __name__ == '__main__':
             Third Highest: {sorted_list[2][0]}  User: {sorted_list[2][1]}
             """)
             return_to_start()
+
+
+    def view_player_stats(selected_player):
+        print(f"Player: {selected_player.name}")
+        print(f"Times Played: {selected_player.times_played}")
+        print(f"Avg Score: {selected_player.avg_score}")
+        print(f"High Score: {selected_player.high_score}")
+        print("-------------------------\n")
+        logged_in_menu(selected_player)
 
 
     def increment_times_played(selected_player):
