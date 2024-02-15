@@ -9,12 +9,10 @@ from hard_quiz import *
 from marilyn_vos_savant_quiz import *
 
 
-# def create_session():
 if __name__ == '__main__':
     engine = create_engine('sqlite:///quizgame.db')
     Session = sessionmaker(bind=engine)
     session = Session()
-    # return session
 
 
     def starter_menu():
@@ -80,6 +78,7 @@ if __name__ == '__main__':
             starter_menu()
 
 
+
     def create_new_player():
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
         player_name = session.query(Player.name).all()
@@ -107,11 +106,9 @@ if __name__ == '__main__':
         returning_player_options = [
             inquirer.List("choose",
                         message = "\x1b[35;3mSelect Yourself\x1b[35;0m",
-                        #   choices =[player for player in players],
                         choices=[(player.name) for player in players],
                         ),
         ]
-        # print(players)
         answer = inquirer.prompt(returning_player_options)
         selected_player_name = answer["choose"]
 
@@ -123,7 +120,6 @@ if __name__ == '__main__':
 
 
     
-
     def return_to_start ():
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
         return_start = [
@@ -139,12 +135,10 @@ if __name__ == '__main__':
             print("\x1b[35;3mYou'll never make the high scores like that!\x1b[35;0m \n")
             exit
 
-        
 
-    def logged_in_menu(selected_player):    #needs to take in player thats selected?
+
+    def logged_in_menu(selected_player): 
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
-        # print(f"Welcome {player.name}")
-        # print(selected_player.name)
         start_menu = [
         inquirer.List("options",
                         message = f"\x1b[35;3mHello,\x1b[35;0m {selected_player.name}\x1b[35;3m! What do you want to do?\x1b[35;3m0m",
@@ -171,16 +165,16 @@ if __name__ == '__main__':
             print("\x1b[35;3mQuitter!\x1b[35;0m \n")
             exit
 
+
+
     # STRETCH GOAL #1
     # def select_quiz_topic():
     #     pass
             
 
+
     def select_quiz(selected_player):
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
-        # print(selected_player.name)
-        # quizzes = session.query(Quiz).all()
-
         select_quiz_options = [
         inquirer.List("choose",
                         message = "\x1b[35;3mHow smart do you think you are?\x1b[35;0m",
@@ -190,9 +184,6 @@ if __name__ == '__main__':
 
         answer = inquirer.prompt(select_quiz_options)
         answer_key = answer["choose"]
-        # print(answer)
-        # quiz = answer_key.id
-        # selected_quiz = quiz
 
         if answer_key == "Not Very":
             new_easy_quiz = Quiz(name="Easy", player_id=selected_player.id)
@@ -226,8 +217,6 @@ if __name__ == '__main__':
 
     def easy_quiz(selected_player, new_easy_quiz):
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
-        # print(new_easy_quiz)
-        # print(selected_player)
         score = run_easy_quiz()
         result = Result(player_id=selected_player.id, quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
@@ -260,6 +249,7 @@ if __name__ == '__main__':
         
 
 
+
     def post_quiz (selected_player):
             print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
             increment_times_played(selected_player)
@@ -280,9 +270,9 @@ if __name__ == '__main__':
 
 
 
+
     def edit_player(selected_player):
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
-        # print(selected_player)
         player_id = selected_player.id
         player = session.query(Player).filter_by(id = player_id).first()
         name = input("\x1b[35;3mEnter a new name or press enter to keep current name: \x1b[35;0m")
@@ -290,6 +280,7 @@ if __name__ == '__main__':
                 player.name = name
         session.commit()
         logged_in_menu(selected_player)
+
 
 
 
@@ -312,13 +303,13 @@ if __name__ == '__main__':
             session.commit()
             print("\x1b[35;3mYou're ouuutta here!\x1b[35;3m \n")
             starter_menu()
-            
+        
+
 
 
     def high_scores():
         players = session.query(Player).all()
         all_scores = session.query(Result).all()
-        # all_quizzes = session.query(Quiz).all()
         player_name = session.query(Player).filter(Player.id == Result.player_id).first()
         quiz_name = session.query(Quiz).filter(Quiz.id == Result.quiz_id).first()
         all_scores1 = [(result.score, player_name.name, quiz_name.name) for result in all_scores]
@@ -342,7 +333,7 @@ if __name__ == '__main__':
             return_to_start()
 
     
-
+    
 
     def view_player_stats(selected_player):
         print("\u001B[2m\u001B[36m---------------------------------------------------------------------------------------------------\u001B[2m\u001B[0m \n ")
@@ -358,7 +349,6 @@ if __name__ == '__main__':
         session.query(Player).all()
         if selected_player.id == Player.id:
             selected_player = Player
-        # print(selected_player.times_played)
 
         if selected_player.times_played is None:
             selected_player.times_played = 1
@@ -369,9 +359,7 @@ if __name__ == '__main__':
         player_high_score(selected_player)
 
 
-
     def player_avg_score(selected_player):
-        # Query all results for this player
         results = session.query(Result).filter_by(player_id=selected_player.id).all()
 
         if results:
@@ -383,7 +371,6 @@ if __name__ == '__main__':
 
 
     def player_high_score(selected_player):
-        # Query all results for this player
         results = session.query(Result).filter_by(player_id=selected_player.id).all()
 
         if results:

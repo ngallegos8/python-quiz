@@ -13,14 +13,6 @@ QUESTIONS = {
     "How long did it take the motorized window washers of the original World Trade Center to clean the entire exterior of the building? \u001B[90m(Int & unit)\u001B[0m": ["1 Month"]
 }
 
-# def run_marilyn_vos_savant_quiz():
-#     for question, correct_answer in QUESTIONS:
-#         answer = input(f"{question}? ")
-#         if answer == correct_answer:
-#             print("Correct!")
-#         else:
-#             print(f"The answer is {correct_answer!r}, not {answer!r}")
-
 def run_marilyn_vos_savant_quiz():
 
     num_correct = 0

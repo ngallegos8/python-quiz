@@ -13,9 +13,9 @@ class Player(Base):
     times_played = Column(Integer, nullable=True)
     avg_score = Column(Integer, nullable=True)
     high_score = Column(Integer, nullable=True)
-    quizzes = relationship("Quiz", secondary="results",back_populates="players") #DO I NEED secondary="results", for point to the association table?
 
-    #create a validation
+    quizzes = relationship("Quiz", secondary="results",back_populates="players")
+
     @validates("name")
     def validate_name(self, key , name):
             if not name:
@@ -23,22 +23,14 @@ class Player(Base):
             else:
                     return name
             
-    #DON'T USE REPR. BLOCKS OBJECT FROM BEING SENT DOWN AFTER SELECTING YOURSELF IN returning_player(). WITH ON IT ONLY PASSES DOWN KEY(int value) THAT INQUIRER ASSIGNS THE selected_player
-    # def __repr__(self):
-    #     return f"{self.name}"
-    
 
 
 class Quiz(Base):
     __tablename__ = 'quizzes'
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable = False)
-    # question_text = Column(String, nullable=False)
-    # correct_answer = Column(String, nullable=False)
-    # alt_answers = Column(String, nullable=True)
     player_id = Column(Integer, ForeignKey("players.id"))
     
-
     players = relationship("Player", secondary="results", back_populates="quizzes") #DO I NEED secondary="results", for point to the association table?
 
 
@@ -49,10 +41,3 @@ class Result(Base):
     player_id = Column(Integer, ForeignKey("players.id"))
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
     score = Column(Integer)
-
-
-# stephen = Player(name="Stephen")
-# quiz1 = Quiz(name="Test")
-# result1 = Result(player_id=1, quiz_id=2)
-# print(stephen.quizzes.append(quiz1))
-# print(result1.quiz_id.name)
