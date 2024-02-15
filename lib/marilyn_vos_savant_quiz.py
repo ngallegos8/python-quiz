@@ -32,9 +32,9 @@ def run_marilyn_vos_savant_quiz():
         answer = input("\n??? ")
         if answer == correct_answer:
             num_correct += 1
-            print("⭐ Correct! ⭐")
+            print("\nCorrect! ✅")
         else:
-            print(f"The answer is {correct_answer!r}, not {answer!r}")
+            print(f"\nHa! Nope! The answer is {correct_answer!r}, not {answer!r}")
         
 
     print(f"\nYou got {num_correct} correct out of {num} questions\n")

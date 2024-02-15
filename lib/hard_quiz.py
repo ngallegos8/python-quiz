@@ -48,9 +48,9 @@ def run_hard_quiz():
         answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
             num_correct += 1
-            print("⭐ Correct! ⭐")
+            print("\nCorrect! ✅")
         else:
-            print(f"The answer is {correct_answer!r}, not {answer!r}")
+            print(f"\nHa! Nope! The answer is {correct_answer!r}, not {answer!r}")
         
 
     print(f"\nYou got {num_correct} correct out of {num} questions\n")

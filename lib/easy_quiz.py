@@ -82,10 +82,11 @@ def run_easy_quiz():
     #     else:
     #         print(f"The answer is {correct_answer!r}, not {answer!r}")
 
+
     num_correct = 0
     for num, (question, alternatives) in enumerate(QUESTIONS.items(), start=1):
-        print(f"\nQuestion {num}:")
-        print(f"{question}?")
+        print(f"\n\u001b[4m\u001b[37;1mQuestion {num}:\u001b[0m")
+        print(f"\n{question}")
         correct_answer = alternatives[0]
         labeled_alternatives = dict(zip(ascii_lowercase, sorted(alternatives)))
         for label, alternative in labeled_alternatives.items():
@@ -95,12 +96,13 @@ def run_easy_quiz():
         answer = labeled_alternatives.get(answer_label)
         if answer == correct_answer:
             num_correct += 1
-            print("⭐ Correct! ⭐")
+            print("\n\u001b[32mCorrect!\u001b[0m ✅")
         else:
-            print(f"Ha! Nope! The answer is {correct_answer!r}, not {answer!r}")
+            print(f"\n\u001b[1mHa! Nope!\u001b[0m The answer is \u001b[32m{correct_answer!r}\u001b[0m, not \u001b[31m{answer!r}\u001b[0m")
         
 
     print(f"\nYou got {num_correct} correct out of {num} questions\n")
+    # print("\u001b[31mHello, world!\u001b[0m")
     return num_correct
 # print(run_easy_quiz())
 

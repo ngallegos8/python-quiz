@@ -86,18 +86,48 @@ if __name__ == '__main__':
         players = session.query(Player).all()
         returning_player_options = [
             inquirer.List("choose",
-                          message = "Select Yourself",
-                          choices =[player for player in players],
-                          ),
+                        message = "Select Yourself",
+                        #   choices =[player for player in players],
+                        choices=[(player.name) for player in players],  # Display player names in the list
+                        ),
         ]
         # print(players)
         answer = inquirer.prompt(returning_player_options)
-        answer_key = answer["choose"]
+        selected_player_name = answer["choose"]
         # print(answer_key)
-        player = answer_key.id
+        # player = answer_key
         # print(type(player))
-        selected_player = player
+        # selected_player = player
+        selected_player = session.query(Player).filter(Player.name == selected_player_name).first()
+        # print(selected_player)
+
         logged_in_menu(selected_player)
+        return selected_player
+
+    # def returning_player(session):
+    #     players = session.query(Player).all()
+    #     returning_player_options = [
+    #         inquirer.List(
+    #             "choose",
+    #             message="Select Yourself",
+    #             choices=[(player.id, player.name) for player in players],  # Display player names in the list
+    #             carousel=True,  # Allow scrolling through the list
+    #         ),
+    #     ]
+    #     answer = inquirer.prompt(returning_player_options)
+    #     player_id = answer["choose"]
+        
+    #     # Find the selected player object based on the selected player ID
+    #     selected_player = session.query(Player).filter(Player.id == player_id).first()
+
+    #     # print(selected_player)
+    #     return selected_player
+    
+
+    # # # Example usage:
+    # # # Assuming you have created a session named session
+    # selected_player = returning_player(session)
+    # print(selected_player)  # This should print the selected player object with all its attributes
 
 
 
@@ -119,6 +149,7 @@ if __name__ == '__main__':
 
     def logged_in_menu(selected_player):    #needs to take in player thats selected?
         # print(f"Welcome {player.name}")
+        # print(selected_player.name)
         start_menu = [
         inquirer.List("options",
                         message = "Select one",
@@ -144,6 +175,7 @@ if __name__ == '__main__':
             
 
     def select_quiz(selected_player):
+        # print(selected_player.name)
         # quizzes = session.query(Quiz).all()
 
         select_quiz_options = [
@@ -160,22 +192,22 @@ if __name__ == '__main__':
         # selected_quiz = quiz
 
         if answer_key == "Easy":
-            new_easy_quiz = Quiz(name="Easy", player_id=selected_player)
+            new_easy_quiz = Quiz(name="Easy", player_id=selected_player.id)
             session.add(new_easy_quiz)
             session.commit()
             easy_quiz(selected_player, new_easy_quiz)
         elif answer_key == "Medium":
-            new_medium_quiz = Quiz(name="Medium", player_id=selected_player)
+            new_medium_quiz = Quiz(name="Medium", player_id=selected_player.id)
             session.add(new_medium_quiz)
             session.commit()
             medium_quiz(selected_player, new_medium_quiz)
         elif answer_key == "Hard":
-            new_hard_quiz = Quiz(name="Hard", player_id=selected_player)
+            new_hard_quiz = Quiz(name="Hard", player_id=selected_player.id)
             session.add(new_hard_quiz)
             session.commit()
             hard_quiz(selected_player, new_hard_quiz)
         elif answer_key == "Marilyn Vos Savant":
-            new_marilyn_vos_savant_quiz = Quiz(name="Marilyn Vos Savant", player_id=selected_player)
+            new_marilyn_vos_savant_quiz = Quiz(name="Marilyn Vos Savant", player_id=selected_player.id)
             session.add(new_marilyn_vos_savant_quiz)
             session.commit()
             marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz)
@@ -189,29 +221,28 @@ if __name__ == '__main__':
         # print(new_easy_quiz)
         # print(selected_player)
         score = run_easy_quiz()
-        result = Result(player_id=selected_player
-        , quiz_id=new_easy_quiz.id, score=score)
+        result = Result(player_id=selected_player.id, quiz_id=new_easy_quiz.id, score=score)
         session.add(result)
         session.commit()
         post_quiz(selected_player)
 
     def medium_quiz(selected_player, new_medium_quiz):
         score = run_medium_quiz()
-        result = Result(player_id=selected_player, quiz_id=new_medium_quiz.id, score=score)
+        result = Result(player_id=selected_player.id, quiz_id=new_medium_quiz.id, score=score)
         session.add(result)
         session.commit()
         post_quiz(selected_player)
 
     def hard_quiz(selected_player, new_hard_quiz):
         score = run_hard_quiz()
-        result = Result(player_id=selected_player, quiz_id=new_hard_quiz.id, score=score)
+        result = Result(player_id=selected_player.id, quiz_id=new_hard_quiz.id, score=score)
         session.add(result)
         session.commit()
         post_quiz(selected_player)
 
     def marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz):
         score = run_marilyn_vos_savant_quiz()
-        result = Result(player_id=selected_player, quiz_id=new_marilyn_vos_savant_quiz.id, score=score)
+        result = Result(player_id=selected_player.id, quiz_id=new_marilyn_vos_savant_quiz.id, score=score)
         session.add(result)
         session.commit()
         post_quiz(selected_player)
@@ -219,6 +250,7 @@ if __name__ == '__main__':
 
 
     def post_quiz (selected_player):
+            increment_times_played(selected_player)
             post_quiz_options = [
                 inquirer.List("return",
                             message = "Now what?",
@@ -272,7 +304,8 @@ if __name__ == '__main__':
     def high_scores():
         players = session.query(Player).all()
         all_scores = session.query(Result).all()
-        all_scores1 = [(result.score, result.player_id) for result in all_scores]
+        player_name = session.query(Player).filter(Player.id == Result.player_id).first()
+        all_scores1 = [(result.score, player_name.name) for result in all_scores]
 
         sorted_list = sorted(all_scores1, key = lambda k: k[0], reverse = True)
         if not players:
@@ -285,8 +318,64 @@ if __name__ == '__main__':
             """)
             return_to_start()
 
+
+
+
+
+
+
+    # def results(selected_player):
+    #     return [result for result in Result.all if result.player_id == selected_player.id]
+    
+    # # def games_played(selected_player):
+    # #     return set([result for result in Result.all if result.quiz_id == selected_player])
+
+    # def times_played(selected_player, results):
+    #     num_times_played =  len(results)
+    #     num_times_played = selected_player.times_played
+
+    # def add_times_played(selected_player):
+    #     if selected_player.id == Player.id:
+    #         Player.times_played = times_played
+
+    
+
+    def increment_times_played(selected_player):
+        session.query(Player).all()
+        if selected_player.id == Player.id:
+            selected_player = Player
+        print(selected_player.times_played)
+
+        if selected_player.times_played is None:
+            selected_player.times_played = 1
+        else:
+            selected_player.times_played += 1
+        session.commit()
+        
+
+
+
+    # def results(self):
+    #     return [result for result in Result.all if result.player == self]
+
+    # def games_played(self):
+    #     # return set([result for result in Result.all if result.game == self])
+    #     return list({result.game for result in self.results()})
+
+    # def played_game(self, game):
+    #     return game in self.games_played()
+
+    # def num_times_played(self, game):
+    #     games_played = [result.game for result in self.results()]
+    #     return games_played.count(game)
+
+
+
+
+
+
+
+
+
+
     starter_menu()
-
-
-
-
