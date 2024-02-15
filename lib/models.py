@@ -23,7 +23,7 @@ class Player(Base):
             else:
                     return name
             
-    #create a repr
+    #DON'T USE REPR. BLOCKS OBJECT FROM BEING SENT DOWN AFTER SELECTING YOURSELF IN returning_player(). WITH ON IT ONLY PASSES DOWN KEY(int value) THAT INQUIRER ASSIGNS THE selected_player
     # def __repr__(self):
     #     return f"{self.name}"
     

@@ -108,7 +108,7 @@ if __name__ == '__main__':
             inquirer.List("choose",
                         message = "\x1b[35;3mSelect Yourself\x1b[35;0m",
                         #   choices =[player for player in players],
-                        choices=[(player.name) for player in players],  # Display player names in the list
+                        choices=[(player.name) for player in players],
                         ),
         ]
         # print(players)
@@ -168,7 +168,7 @@ if __name__ == '__main__':
             print("\x1b[35;3mGo study and come back!\x1b[35;3m")
             starter_menu()
         elif start_menu_responses_key == "Quit":
-            print("\x1b[35;3mQuitter!\x1b[35;0m")
+            print("\x1b[35;3mQuitter!\x1b[35;0m \n")
             exit
 
     # STRETCH GOAL #1
@@ -219,7 +219,7 @@ if __name__ == '__main__':
             print("\x1b[35;3mHaha! Bad Choice!\x1b[35;0m")
             marilyn_vos_savant_quiz(selected_player, new_marilyn_vos_savant_quiz)
         elif answer_key == "Quit":
-            print("\x1b[35;3mChicken!\x1b[35;0m")
+            print("\x1b[35;3mChicken!\x1b[35;0m \n")
             exit
 
 
@@ -275,7 +275,7 @@ if __name__ == '__main__':
             if return_start_answers["return"] == "My Profile":
                 logged_in_menu(selected_player)
             elif return_start_answers["return"] == "Quit":
-                print("\x1b[35;3mSee you next time!\x1b[35;3m")
+                print("\x1b[35;3mSee you next time!\x1b[35;3m \n")
                 exit
 
 
@@ -310,7 +310,7 @@ if __name__ == '__main__':
         elif start_menu_responses_key == "Yes":
             session.delete(player)
             session.commit()
-            print("\x1b[35;3mYou're outta here!\x1b[35;3m")
+            print("\x1b[35;3mYou're ouuutta here!\x1b[35;3m \n")
             starter_menu()
             
 
